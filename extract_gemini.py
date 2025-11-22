@@ -55,25 +55,10 @@ def form_user_model_list(driver):
     # Form the json formatted chat output
     soup = BeautifulSoup(driver.page_source, "html.parser")
 
-    user_chat_history = [chat.text for chat in soup.find_all("user-query")]
-    model_chat_history = [chat.text for chat in soup.find_all("response-container")] 
+    user_chat_history = [chat.text.strip() for chat in soup.find_all("user-query")]
+    model_chat_history = [chat.text.strip() for chat in soup.find_all("response-container")] 
 
     return user_chat_history, model_chat_history
-
-
-def export_conversation_json(json_path, user_chat_history, model_chat_history):
-    """
-    Takes in the list of user chat and model chat in temporal order
-    and exports it to the relevant json format for data exploitation.
-
-    args:
-        json_path: the path to the output json
-        user_chat_history: list of user chat queries in temporal order
-        model_chat_history: list of model chat responses in temporal order
-    return:
-        None
-    """
-    import json
 
 
 def get_next_conversation_path(data_dir, prefix="gemini_conversation", ext=".json"):
@@ -113,10 +98,6 @@ def export_conversation_json(json_path, user_chat_history, model_chat_history, c
     return:
         None
     """
-
-    if len(user_chat_history) != len(model_chat_history):
-        raise ValueError("user_chat_history and model_chat_history must have the same length")
-
     messages = []
 
     for i, (user_msg, model_msg) in enumerate(zip(user_chat_history, model_chat_history)):

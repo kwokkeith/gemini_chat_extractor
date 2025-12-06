@@ -1,0 +1,23 @@
+#### OS files
+.DS_Store
+
+#### Python bytecode and cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+#### Virtual environments
+venv/
+.env/
+.venv/
+env/
+pip-wheel-metadata/
+
+# Conversation data directories
+gemini_convo_data/
+gpt_convo_data/
+
+# If you ever dump conversations directly in the repo root,
+# this will ignore the numbered conversation files
+gemini_conversation_*.json
+gpt_conversation_*.json
